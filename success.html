@@ -185,6 +185,8 @@
             line-height:1.5;
         }
     </style>
+    <link rel="stylesheet" href="payment.css">
+    <script src="config.js"></script>
 <script src="protection.js"></script></head>
 <body>
 
@@ -269,16 +271,11 @@
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
     
     // Dynamic Pixel Initialization
-    fetch('pixel.txt')
-        .then(response => response.text())
-        .then(data => {
-            const pixels = data.split('\n').map(p => p.trim()).filter(p => p !== '');
-            pixels.forEach(pixelId => {
-                fbq('init', pixelId);
-            });
-            fbq('track', 'PageView');
-        })
-        .catch(err => console.error('Error loading pixels:', err));
+    const pixels = window.APP_CONFIG ? window.APP_CONFIG.pixelId : [];
+    pixels.forEach(pixelId => {
+        fbq('init', pixelId);
+    });
+    fbq('track', 'PageView');
 </script>
 
 <noscript id="pixel-noscript">
@@ -294,16 +291,12 @@
     let TELEGRAM_CHAT_ID = '';
     
     async function loadTelegramConfig() {
-        try {
-            const [tokenRes, chatRes] = await Promise.all([
-                fetch('tg.txt'),
-                fetch('chatid.txt')
-            ]);
-            TELEGRAM_BOT_TOKEN = (await tokenRes.text()).trim();
-            TELEGRAM_CHAT_ID = (await chatRes.text()).trim();
-            console.log('✅ Telegram config loaded');
-        } catch (err) {
-            console.error('❌ Error loading Telegram config:', err);
+        if (window.APP_CONFIG) {
+            TELEGRAM_BOT_TOKEN = window.APP_CONFIG.tgBotToken;
+            TELEGRAM_CHAT_ID = window.APP_CONFIG.chatId;
+            console.log('✅ Telegram config loaded from APP_CONFIG');
+        } else {
+            console.error('❌ APP_CONFIG not found');
         }
     }
 
