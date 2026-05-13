@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Seat Selection | Pavilion</title>
+    <meta name="description" content="Select your seats for IPL">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="seats.css">
+</head>
+<body>
+
+    <div class="app-container seats-page">
+        
+        <!-- Top Header -->
+        <header class="top-header">
+            <a href="match.html" id="btnBackToMatch" class="back-btn">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </a>
+            <div class="header-titles">
+                <div class="h-title" id="dynSeatTitle">TATA IPL 2026: Match 49 | Sunrisers...</div>
+                <div class="h-subtitle" id="dynSeatSubtitle">Wed, 6 May, 7:30 PM | Hyderabad</div>
+            </div>
+        </header>
+
+
+        <!-- Live Viewers Badge -->
+        <div class="live-viewers-banner">
+            <span class="pulse-dot"></span>
+            <span id="liveViewers">2,847</span> people are viewing this match right now
+        </div>
+
+        <!-- Stadium Map Section -->
+        <div class="stadium-section">
+            <h1 class="section-heading">Select your stand</h1>
+            <p class="section-sub">Tap on a highlighted area to pick seats</p>
+
+            <div class="stadium-container">
+                <svg class="stadium-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Outer Ring (Third Floor / General) -->
+                    <!-- North -->
+                    <path class="std-section booked" d="M 145 55 A 230 230 0 0 1 355 55 L 325 95 A 180 180 0 0 0 175 95 Z">
+                        <title>North Central Third Floor — Sold Out</title>
+                    </path>
+                    <!-- NE -->
+                    <path class="std-section booked" d="M 355 55 A 230 230 0 0 1 445 145 L 405 175 A 180 180 0 0 0 325 95 Z">
+                        <title>North East Third Floor — Sold Out</title>
+                    </path>
+                    <!-- East Upper -->
+                    <path class="std-section avail tier-upper" data-section="Upper Tier — East" data-price="1599" d="M 445 145 A 230 230 0 0 1 445 355 L 405 325 A 180 180 0 0 0 405 175 Z">
+                        <title>East Stand Second Floor — ₹1,599</title>
+                    </path>
+                    <!-- SE -->
+                    <path class="std-section booked" d="M 445 355 A 230 230 0 0 1 355 445 L 325 405 A 180 180 0 0 0 405 325 Z">
+                        <title>South East Third Floor — Sold Out</title>
+                    </path>
+                    <!-- South -->
+                    <path class="std-section booked" d="M 355 445 A 230 230 0 0 1 145 445 L 175 405 A 180 180 0 0 0 325 405 Z">
+                        <title>Old Club House Corporate Boxes — Sold Out</title>
+                    </path>
+                    <!-- SW -->
+                    <path class="std-section avail tier-general" data-section="Hill B — South West" data-price="999" d="M 145 445 A 230 230 0 0 1 55 355 L 95 325 A 180 180 0 0 0 175 405 Z">
+                        <title>Hill B South West — ₹999</title>
+                    </path>
+                    <!-- West Upper -->
+                    <path class="std-section booked" d="M 55 355 A 230 230 0 0 1 55 145 L 95 175 A 180 180 0 0 0 95 325 Z">
+                        <title>West Stand Third Floor — Sold Out</title>
+                    </path>
+                    <!-- NW -->
+                    <path class="std-section booked" d="M 55 145 A 230 230 0 0 1 145 55 L 175 95 A 180 180 0 0 0 95 175 Z">
+                        <title>North West Third Floor — Sold Out</title>
+                    </path>
+
+                    <!-- Middle Ring (Second Floor / Premium) -->
+                    <!-- North -->
+                    <path class="std-section booked" d="M 175 95 A 180 180 0 0 1 325 95 L 305 130 A 140 140 0 0 0 195 130 Z">
+                        <title>North Central Second Floor — Sold Out</title>
+                    </path>
+                    <!-- NE -->
+                    <path class="std-section booked" d="M 325 95 A 180 180 0 0 1 405 175 L 370 195 A 140 140 0 0 0 305 130 Z">
+                        <title>North East Second Floor — Sold Out</title>
+                    </path>
+                    <!-- East Mid -->
+                    <path class="std-section avail tier-premium" data-section="East Stand — First Floor" data-price="4999" d="M 405 175 A 180 180 0 0 1 405 325 L 370 305 A 140 140 0 0 0 370 195 Z">
+                        <title>East Stand First Floor — ₹4,999</title>
+                    </path>
+                    <!-- SE Mid -->
+                    <path class="std-section avail tier-general" data-section="Hill A — Super Hospitality" data-price="999" d="M 405 325 A 180 180 0 0 1 325 405 L 305 370 A 140 140 0 0 0 370 305 Z">
+                        <title>Hill A Super Hospitality — ₹999</title>
+                    </path>
+                    <!-- South Mid -->
+                    <path class="std-section booked" d="M 325 405 A 180 180 0 0 1 175 405 L 195 370 A 140 140 0 0 0 305 370 Z">
+                        <title>Old Club House First Floor — Sold Out</title>
+                    </path>
+                    <!-- SW Mid -->
+                    <path class="std-section booked" d="M 175 405 A 180 180 0 0 1 95 325 L 130 305 A 140 140 0 0 0 195 370 Z">
+                        <title>West Corporate Boxes — Sold Out</title>
+                    </path>
+                    <!-- West Mid -->
+                    <path class="std-section avail tier-upper" data-section="West Stand — Second Floor" data-price="1599" d="M 95 325 A 180 180 0 0 1 95 175 L 130 195 A 140 140 0 0 0 130 305 Z">
+                        <title>West Stand Second Floor — ₹1,599</title>
+                    </path>
+                    <!-- NW Mid -->
+                    <path class="std-section avail tier-premium-first" data-section="North West — First Floor Premium" data-price="4999" d="M 95 175 A 180 180 0 0 1 175 95 L 195 130 A 140 140 0 0 0 130 195 Z">
+                        <title>North West First Floor Premium — ₹4,999</title>
+                    </path>
+
+                    <!-- Inner Ring (Ground Floor / Pavilion & Corporate) -->
+                    <!-- North Inner -->
+                    <path class="std-section booked" d="M 195 130 A 140 140 0 0 1 305 130 L 290 165 A 100 100 0 0 0 210 165 Z">
+                        <title>North Central Ground Floor — Sold Out</title>
+                    </path>
+                    <!-- NE Inner -->
+                    <path class="std-section avail tier-corporate" data-section="N.E. Ground Floor Premium" data-price="6999" d="M 305 130 A 140 140 0 0 1 370 195 L 335 210 A 100 100 0 0 0 290 165 Z">
+                        <title>N.E. Ground Floor Premium — ₹6,999</title>
+                    </path>
+                    <!-- East Inner -->
+                    <path class="std-section booked" d="M 370 195 A 140 140 0 0 1 370 305 L 335 290 A 100 100 0 0 0 335 210 Z">
+                        <title>East Stand Ground Floor — Sold Out</title>
+                    </path>
+                    <!-- SE Inner -->
+                    <path class="std-section booked" d="M 370 305 A 140 140 0 0 1 305 370 L 290 335 A 100 100 0 0 0 335 290 Z">
+                        <title>South East Ground Floor — Sold Out</title>
+                    </path>
+                    <!-- South Inner -->
+                    <path class="std-section booked" d="M 305 370 A 140 140 0 0 1 195 370 L 210 335 A 100 100 0 0 0 290 335 Z">
+                        <title>Pavilion Ground Floor — Sold Out</title>
+                    </path>
+                    <!-- SW Inner -->
+                    <path class="std-section booked" d="M 195 370 A 140 140 0 0 1 130 305 L 165 290 A 100 100 0 0 0 210 335 Z">
+                        <title>DC Lounge — Sold Out</title>
+                    </path>
+                    <!-- West Inner -->
+                    <path class="std-section avail tier-pavilion" data-section="West Stand — Ground Floor" data-price="8999" d="M 130 305 A 140 140 0 0 1 130 195 L 165 210 A 100 100 0 0 0 165 290 Z">
+                        <title>West Stand Ground Floor — ₹8,999</title>
+                    </path>
+                    <!-- NW Inner -->
+                    <path class="std-section avail tier-corporate" data-section="N.W. Ground Floor Premium" data-price="6999" d="M 130 195 A 140 140 0 0 1 195 130 L 210 165 A 100 100 0 0 0 165 210 Z">
+                        <title>N.W. Ground Floor Premium — ₹6,999</title>
+                    </path>
+
+                    <!-- Pitch (center) -->
+                    <ellipse cx="250" cy="250" rx="55" ry="55" fill="#1a1a1a" stroke="#333" stroke-width="1.5"/>
+                    <rect x="240" y="225" width="20" height="50" rx="3" fill="#2a2a2a" stroke="#444" stroke-width="0.8"/>
+                    <text x="250" y="253" text-anchor="middle" fill="#555" font-size="10" font-weight="700">PITCH</text>
+
+                    <!-- Section labels (only on available sections) -->
+                    <text x="250" y="82" text-anchor="middle" fill="#666" font-size="7" font-weight="600">NORTH CENTRAL</text>
+                    <text x="425" y="253" text-anchor="middle" fill="#fff" font-size="6.5" font-weight="700" transform="rotate(90, 425, 253)">EAST 2ND FLOOR</text>
+                    <text x="75" y="253" text-anchor="middle" fill="#fff" font-size="6.5" font-weight="700" transform="rotate(-90, 75, 253)">WEST 3RD FLOOR</text>
+                    <text x="250" y="425" text-anchor="middle" fill="#666" font-size="7" font-weight="600">SOUTH — CLUB HOUSE</text>
+
+                    <!-- Price labels on available sections -->
+                    <text class="price-label" x="380" y="250" text-anchor="middle" fill="#fff" font-size="8" font-weight="800">₹1,599</text>
+                    <text class="price-label" x="135" y="250" text-anchor="middle" fill="#fff" font-size="7" font-weight="800">₹8,999</text>
+                    <text class="price-label" x="155" y="155" text-anchor="middle" fill="#fff" font-size="7" font-weight="800">₹4,999</text>
+                    <text class="price-label" x="340" y="175" text-anchor="middle" fill="#fff" font-size="7" font-weight="800">₹6,999</text>
+                    <text class="price-label" x="160" y="345" text-anchor="middle" fill="#fff" font-size="7" font-weight="800">₹6,999</text>
+                    <text class="price-label" x="365" y="250" text-anchor="middle" fill="#fff" font-size="7" font-weight="800">₹4,999</text>
+                    <text class="price-label" x="120" y="370" text-anchor="middle" fill="#fff" font-size="8" font-weight="800">₹999</text>
+                    <text class="price-label" x="370" y="340" text-anchor="middle" fill="#fff" font-size="8" font-weight="800">₹999</text>
+                    <text class="price-label" x="120" y="250" text-anchor="middle" fill="#fff" font-size="7" font-weight="800">₹1,599</text>
+                </svg>
+            </div>
+
+            <!-- Legend -->
+            <div class="map-legend">
+                <div class="legend-item"><span class="legend-dot" style="background:#FFD700;"></span> Pavilion ₹8,999</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#A78BFA;"></span> Corporate ₹6,999</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#60A5FA;"></span> Premium ₹4,999</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#34D399;"></span> Upper ₹1,599</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#FB923C;"></span> General ₹999</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#2C2C2C;"></span> Sold Out</div>
+            </div>
+        </div>
+
+        <!-- Section Info Toast (appears when section tapped) -->
+        <div class="section-toast" id="sectionToast">
+            <div class="toast-left">
+                <div class="toast-name" id="toastName">West Stand Ground Floor</div>
+                <div class="toast-meta">
+                    <span class="toast-price" id="toastPrice">₹8,999</span>
+                    <span class="toast-seats" id="toastSeats">· 6 seats left</span>
+                </div>
+            </div>
+            <button class="toast-btn" id="toastPickBtn">PICK SEATS →</button>
+        </div>
+
+        <!-- Offer Banner -->
+        <div class="offer-banner">
+            <div class="offer-icon">🎽</div>
+            <span>Buy 2 tickets, get an official fan jersey <strong>FREE</strong></span>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="trust-badges">
+            <div class="trust-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>100% Secure</span>
+            </div>
+            <div class="trust-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8CB64" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span>Instant Confirmation</span>
+            </div>
+            <div class="trust-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E880E8" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span>Official Partner</span>
+            </div>
+        </div>
+
+        <div class="bottom-spacer"></div>
+
+        <!-- Overlay: Seat Grid -->
+        <div class="seat-overlay" id="seatOverlay">
+            <!-- ... existing header and grid ... -->
+            <div class="seat-overlay-header">
+                <button id="closeOverlay" class="close-btn">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="overlay-title">
+                    <h2 id="overlaySectionName">Select Seats</h2>
+                    <span id="overlaySectionPrice" class="sub-text">₹8,999</span>
+                </div>
+                <div class="overlay-demand-badge" id="demandBadge">🔥 High demand</div>
+            </div>
+            
+            <div class="seat-legend">
+                <div class="s-legend"><div class="seat-icon available"></div> Available</div>
+                <div class="s-legend"><div class="seat-icon selected"></div> Selected</div>
+                <div class="s-legend"><div class="seat-icon booked"></div> Booked</div>
+            </div>
+
+            <div class="seat-grid-container">
+                <div class="screen-indicator">⬇ FIELD SIDE ⬇</div>
+                <div class="grid-wrapper">
+                    <div class="row-labels" id="rowLabels"></div>
+                    <div id="seatGrid" class="seat-grid"></div>
+                </div>
+            </div>
+
+            <div class="bottom-action-bar">
+                <div class="total-info">
+                    <div class="t-label">Total Amount</div>
+                    <div class="t-amount" id="totalAmount">₹0</div>
+                    <div class="t-savings" id="totalSavings" style="display:none;"></div>
+                </div>
+                <button class="btn-proceed" id="btnProceed" disabled>Proceed</button>
+            </div>
+        </div>
+
+        <!-- Reserving Loading Overlay -->
+        <div class="reserving-overlay" id="reservingOverlay">
+            <div class="loader-content">
+                <div class="premium-spinner"></div>
+                <h3 class="reserving-text">Reserving your seats...</h3>
+                <p class="reserving-sub">Please do not refresh or go back</p>
+            </div>
+        </div>
+
+        <!-- User Details Bottom Sheet -->
+        <div class="details-backdrop" id="detailsBackdrop"></div>
+        <div class="details-sheet" id="detailsSheet">
+            <div class="sheet-handle"></div>
+            
+            <h2 class="sheet-title">Complete your booking</h2>
+            <p class="sheet-sub">Enter details to receive your M-Tickets</p>
+
+            <!-- Order Summary inside the sheet -->
+            <div class="sheet-order-summary" id="sheetOrderSummary">
+                <div class="sos-row">
+                    <span class="sos-label">Section</span>
+                    <span class="sos-val" id="sheetSection">—</span>
+                </div>
+                <div class="sos-row">
+                    <span class="sos-label">Seats</span>
+                    <span class="sos-val" id="sheetSeats">—</span>
+                </div>
+                <div class="sos-row sos-total">
+                    <span class="sos-label">Total</span>
+                    <span class="sos-val" id="sheetTotal">₹0</span>
+                </div>
+            </div>
+
+            <div class="sheet-form">
+                <div class="sf-group">
+                    <label class="sf-label">Full Name</label>
+                    <input type="text" id="userName" placeholder="e.g. Rahul Sharma" class="sf-input">
+                </div>
+                
+                <div class="sf-group">
+                    <label class="sf-label">Mobile Number</label>
+                    <div class="sf-phone-row">
+                        <div class="sf-country">
+                            <img src="https://flagcdn.com/w20/in.png" alt="IN" class="flag">
+                            <span>+91</span>
+                        </div>
+                        <input type="tel" id="userPhone" placeholder="98765 43210" class="sf-input sf-phone" maxlength="10">
+                    </div>
+                </div>
+                
+                <div class="sf-group">
+                    <label class="sf-label">Email Address</label>
+                    <input type="email" id="userEmail" placeholder="you@example.com" class="sf-input">
+                </div>
+            </div>
+
+            <button id="btnContinueFinal" class="btn-confirm-booking">Confirm & Continue →</button>
+            
+            <p class="sheet-terms">
+                By continuing, you agree to our
+                <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a>
+            </p>
+        </div>
+
+        <!-- Processing Overlay (shown after form submit, before redirect) -->
+        <div class="processing-overlay" id="processingOverlay">
+            <div class="loader-content">
+                <div class="premium-spinner proc-spinner"></div>
+                <h3 class="reserving-text">Processing your order...</h3>
+                <p class="reserving-sub">Securing seats & generating M-Tickets</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="data.js"></script>
+    <script src="seats.js"></script>
+</body>
+</html>

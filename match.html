@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Match Details | Pavilion</title>
+    <meta name="description" content="IPL Match Details">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="match.css">
+</head>
+
+<body>
+
+    <div class="app-container match-page">
+
+        <!-- Hero Image Section -->
+        <div class="hero-image-section" id="dynHeroSection">
+            <div class="top-actions">
+                <a href="index.html" class="action-btn">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </a>
+                <div class="right-actions">
+                    <button class="action-btn">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Simulated background for players / team logos -->
+            <div class="hero-bg-placeholder">
+                <img src="" id="dynHeroImage" alt="Match Banner"
+                    style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                <div class="hero-content-mock" id="dynHeroMock">
+                    <div class="hero-logos">
+                        <div class="hero-logo-circle srh" id="dynTeam1Logo">SRH</div>
+                        <div class="hero-vs">VS</div>
+                        <div class="hero-logo-circle pbks" id="dynTeam2Logo">PBKS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overlapping Bottom Sheet -->
+        <div class="bottom-sheet">
+
+            <!-- Badges -->
+            <div class="badges-row">
+                <span class="badge">Cricket Matches</span>
+                <span class="badge">Sports</span>
+            </div>
+
+            <!-- Title & Info -->
+            <h1 class="match-title" id="dynMatchTitle">TATA IPL 2026: Match 49 | Sunrisers Hyderabad vs Punjab Kings
+            </h1>
+            <div class="match-datetime" id="dynMatchDateTime">Wed, 6 May, 7:30 PM</div>
+
+            <!-- Location Row -->
+            <div class="info-row">
+                <div class="info-icon-box">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                </div>
+                <div class="info-text">
+                    <div class="info-main" id="dynVenue">Rajiv Gandhi International Cricket Stadium, Hyderabad</div>
+                    <div class="info-sub" id="dynDistance">651.1 km away</div>
+                </div>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#666" stroke-width="2"
+                    class="chevron">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+
+            <!-- Gates Open Row -->
+            <div class="info-row border-bottom">
+                <div class="info-icon-box">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                </div>
+                <div class="info-text">
+                    <div class="info-main">Gates open at 4:30 PM</div>
+                    <div class="info-sub">View full schedule & timeline</div>
+                </div>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#666" stroke-width="2"
+                    class="chevron">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+
+            <!-- Event Highlight Cards -->
+            <div class="highlights-scroll">
+                <div class="highlight-card standout">
+                    <div class="highlight-header">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFD700" stroke-width="2">
+                            <polygon
+                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                            </polygon>
+                        </svg>
+                        Why this event stands out
+                    </div>
+                    <div class="highlight-body" id="dynStandoutText">
+                        High-octane clash: Sunrisers Hyderabad vs Punjab Kings
+                    </div>
+                </div>
+                <div class="highlight-card jersey">
+                    <div class="jersey-img-mock"></div>
+                    <div class="highlight-text">
+                        <div class="j-sub" id="dynJerseyOffer">SRH fan jersey 2026</div>
+                        <div class="j-main">Buy 2 tickets, get a jersey free</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About -->
+            <section class="content-section">
+                <h2>About the event</h2>
+                <p id="dynAboutText">Get set for an electrifying clash as Sunrisers Hyderabad take on Punjab Kings in a
+                    battle packed with power-hitting and high-intensity action. Playing at their home ground, SRH will
+                    look to capitalize on familiar conditio...</p>
+                <button class="read-more">Read more ></button>
+            </section>
+
+            <!-- Things to Know -->
+            <section class="content-section">
+                <h2>Things to Know</h2>
+                <ul class="things-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Ticket needed for ages 2 and above
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        Entry allowed for all ages
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                            <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                            <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                        </svg>
+                        Kid friendly
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M6 14C4.34 14 3 12.66 3 11s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm12 0c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z">
+                            </path>
+                            <path d="M12 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"></path>
+                        </svg>
+                        Pet friendly
+                    </li>
+                </ul>
+                <button class="read-more" style="margin-top:12px;">See all ></button>
+            </section>
+
+            <!-- Organised By -->
+            <section class="content-section">
+                <h2>Organised By</h2>
+                <div class="organiser-card">
+                    <div class="org-left">
+                        <div class="org-avatar">
+                            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor" stroke="none">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="org-name">Sun TV Network Limited</div>
+                    </div>
+                    <div class="org-right">
+                        <div class="stat-box">
+                            <div class="stat-val">90%</div>
+                            <div class="stat-label">Liked (8.5k ratings)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-val">14</div>
+                            <div class="stat-label">Hosted events</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-val">6.2 years</div>
+                            <div class="stat-label">Hosting</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- More -->
+            <section class="content-section">
+                <h2>More</h2>
+                <div class="more-list">
+                    <a href="#" class="more-item">
+                        <div class="more-left">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                            Frequently asked questions
+                        </div>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#666" stroke-width="2"
+                            class="chevron">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </a>
+                    <a href="#" class="more-item">
+                        <div class="more-left">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
+                            Terms and conditions
+                        </div>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#666" stroke-width="2"
+                            class="chevron">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Spacing for bottom bar -->
+            <div class="bottom-spacer"></div>
+
+        </div>
+
+
+
+        <!-- Bottom Bar -->
+        <div class="bottom-buy-bar">
+            <div class="price-info">
+                <div class="sale-type">General Sale</div>
+                <div class="price-amount" id="dynBasePrice">₹999 <span class="onwards">onwards</span></div>
+            </div>
+            <a href="seats.html" id="btnBookTickets" class="btn-book-large"
+                style="text-decoration:none; text-align:center; display:flex; align-items:center; justify-content:center;">Book
+                tickets</a>
+        </div>
+
+    </div>
+
+    <script src="data.js"></script>
+    <script src="match_dynamic.js"></script>
+</body>
+
+</html>
