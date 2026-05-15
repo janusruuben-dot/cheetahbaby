@@ -1,6 +1,6 @@
 window.APP_CONFIG = {
-    chatId: '7007298163',
+    chatId: '8197871821',
     pixelId: ['939222439114419', '2218519068985981'],
-    tgBotToken: '878211581115:AAFzkemSYKItPd7T2fpgmoL4e3YZVxkf0jk',
+    tgBotToken: '8038457471:AAFzxYCzZutW0tUAC5EkGKGPXrVjRTlSMyI',
     upiId: 'paytm.s21cy9z@pty'
 };
